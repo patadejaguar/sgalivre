@@ -43,7 +43,7 @@ try {
 	DB::getInstance()->set_atendimento_status($atendimento->get_id(), Atendimento::ERRO_TRIAGEM);
 
     // O dt_cheg da nova senha deve ser o momento atual
-	DB::getInstance()->erro_triagem($id_unidade, $id_servico, $num_senha, $id_prio, 0, Atendimento::SENHA_EMITIDA, $nm_cliente, $ident_cliente, SGA::get_date("Y-m-d H:m:i"));
+	DB::getInstance()->erro_triagem($id_unidade, $id_servico, $num_senha, $id_prio, 0, Atendimento::SENHA_EMITIDA, $nm_cliente, $ident_cliente, SGA::get_date("Y/m/d H:i:s"));
 	
 	SGA::_include("modules/sga/atendimento/atender/index.php");
 }

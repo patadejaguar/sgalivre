@@ -66,7 +66,7 @@ class Graidle
 		$this->d=10;
 		$this->LegStrLen=64;
 		$this->LegendAlign="right";
-		Color::color();
+		TableOfColors::color();
 	}
 
 	function create(){
@@ -178,13 +178,13 @@ class Graidle
 
 			$this->im=imagecreatetruecolor($this->w,$this->h);
 
-			$rgb=Color::hex2rgb($this->axis_color);
+			$rgb=TableOfColors::hex2rgb($this->axis_color);
 			$this->axis_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 
-			$rgb=Color::hex2rgb($this->font_color);
+			$rgb=TableOfColors::hex2rgb($this->font_color);
 			$this->font_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 
-			$rgb=Color::hex2rgb($this->bg_color);
+			$rgb=TableOfColors::hex2rgb($this->bg_color);
 			$this->bg_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 			imagefilltoborder($this->im,1,1,1,$this->bg_color);
 
@@ -294,13 +294,13 @@ class Graidle
 
 			$this->im=imagecreatetruecolor($this->w,$this->h);
 
-			$rgb=Color::hex2rgb($this->axis_color);
+			$rgb=TableOfColors::hex2rgb($this->axis_color);
 			$this->axis_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 
-			$rgb=Color::hex2rgb($this->font_color);
+			$rgb=TableOfColors::hex2rgb($this->font_color);
 			$this->font_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 
-			$rgb=Color::hex2rgb($this->bg_color);
+			$rgb=TableOfColors::hex2rgb($this->bg_color);
 			$this->bg_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 
 			imagefilltoborder($this->im,1,1,1,$this->bg_color);
@@ -349,11 +349,11 @@ class Graidle
 
 			$this->im=imagecreatetruecolor($this->w,$this->h);	#<----CREO L'IMMAGINE PER IL GRAFICO A TORTA
 
-			$rgb=Color::hex2rgb($this->bg_color);
+			$rgb=TableOfColors::hex2rgb($this->bg_color);
 			$this->bg_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 			imagefilltoborder($this->im,1,1,1,$this->bg_color);	#<---- Creo lo sfondo
 
-			$rgb=Color::hex2rgb($this->font_color);
+			$rgb=TableOfColors::hex2rgb($this->font_color);
 			$this->font_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 
 			if(isset($this->legend))	graidle::legend();
@@ -387,14 +387,14 @@ class Graidle
 
 			$this->im=imagecreatetruecolor($this->w,$this->h);	#<----CREO L'IMMAGINE PER IL GRAFICO A TORTA
 
-			$rgb=Color::hex2rgb($this->bg_color);
+			$rgb=TableOfColors::hex2rgb($this->bg_color);
 			$this->bg_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 			imagefilltoborder($this->im,1,1,1,$this->bg_color);	#<---- Creo lo sfondo
 
-			$rgb=Color::hex2rgb($this->font_color);
+			$rgb=TableOfColors::hex2rgb($this->font_color);
 			$this->font_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 
-			$rgb=Color::hex2rgb($this->axis_color);
+			$rgb=TableOfColors::hex2rgb($this->axis_color);
 			$this->axis_color=imagecolorallocate($this->im,$rgb[0],$rgb[1],$rgb[2]);
 
 			if(isset($this->legend))	graidle::legend();

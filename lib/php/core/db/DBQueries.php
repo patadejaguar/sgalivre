@@ -194,17 +194,6 @@ interface DBQueries {
 	 * @return String (SQL Query)
 	 */
 	public function inserir_usuario();
-
-	public function criar_agenda();
-
-	/**
-	 * Cria agendamento
-	 * @return String (SQL Query)
-	 */
-	public function marcar_agendamento();
-
-	public function desmarcar_agendamento();
-
 	
 	/**
 	 * Retorna a Query para atualizar um usuario
@@ -487,8 +476,6 @@ interface DBQueries {
 	 * @return String (SQL Query)
 	 */
 	public function remover_servico_uni();
-
-	public function desmarcar_agen();
 	
 	
 	/**
@@ -545,10 +532,6 @@ interface DBQueries {
 	 * @return String (SQL Query)
 	 */
 	public function get_servico();
-
-	public function get_agendas();
-
-	public function get_agendas_disponiveis();
 	
 	/**
 	 * Retorna a Query para pegar o Servico especificado pelo id do servico
@@ -874,8 +857,6 @@ interface DBQueries {
 	 * @return String (SQL Query)
 	 */
 	public function get_msg_status();
-
-	public function get_agenda();
 	
 	/**
 	 * Modifica status da impressão
@@ -883,20 +864,6 @@ interface DBQueries {
 	 */
 	public function set_msg_status();
 	
-
-	/**
-	 * Retorna Configuração Prioridade
-	 * @return String (SQL Query)
-	 */
-	public function get_conf_prio();
-	
-	/**
-	 * Modifica Configuração Prioridade
-	 * @return String (SQL Query)
-	 */
-	public function set_conf_prio();
-
-
 	/**
 	 * Retorna nome da prioridade especificada
 	 * @return 	String (SQL Query)

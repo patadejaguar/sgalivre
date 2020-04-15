@@ -554,31 +554,6 @@ class PgSQLQueries implements DBQueries {
 					:ult_nm_usu, md5(:senha_usu), 1
 				)";
 	}
-
-	public function criar_agenda(){
-		return "INSERT INTO agendas
-				( 
-					dia, dia_semana, hora, id_usu, id_uni 
-				) 
-				VALUES 
-				(
-					:dia, :dia_semana, :hora, :id_usu, :id_uni
-				)";
-	}
-
-	public function marcar_agendamento(){
-		return "UPDATE agendas
-					SET 
-						id_cliente =  :id_cli
-				WHERE id_agen = :id_agenda";
-	}
-
-	public function desmarcar_agendamento(){
-		return "UPDATE agendas
-					SET 
-						id_cliente =  null
-				WHERE id_agen = :id_agenda";
-	}
 	
 	public function atualizar_usuario() {
 		return "UPDATE usuarios
@@ -860,15 +835,6 @@ class PgSQLQueries implements DBQueries {
 		return "DELETE FROM uni_serv
 				WHERE id_uni = :id_uni
 					AND id_serv = :id_serv";
-	}
-
-	public function desmarcar_agen() {		
-		
-		return "DELETE FROM agendas
-				WHERE dia = :dia
-					AND hora = :hora
-					AND id_usu = :id_usu
-					AND id_uni = :id_uni";
 	}
 	
 	public function inserir_permissao_modulo_cargo() {
@@ -1591,35 +1557,6 @@ public function get_senha_msg_loc(){
 				FROM senha_uni_msg 
 				WHERE id_uni = :id_uni";
 	}
-
-	public function get_agenda(){
-		return "SELECT id_agen
-				FROM agendas 
-				WHERE dia = :dia
-					AND hora = :horario
-					AND id_uni = :id_uni
-					AND id_usu = :id_usuario";
-	}
-
-	public function get_agendas(){
-		return "SELECT id_agen, dia, hora, id_usu, id_uni, dia_semana, id_cliente
-				FROM agendas 
-				WHERE dia = :dia
-					AND (hora = :horario OR 0 = 0)
-					AND id_uni = :id_uni
-					AND (id_usu = :id_usuario OR 0 = 0)";
-	}
-
-	public function get_agendas_disponiveis(){
-		return "SELECT id_agen, dia, hora, id_usu, id_uni, dia_semana, id_cliente
-				FROM agendas 
-				WHERE dia = :dia
-					AND (hora = :horario OR 0 = 0)
-					AND id_uni = :id_uni
-					AND (id_usu = :id_usuario OR 0 = 0)
-					AND (id_cliente is null or id_cliente = :id_cliente)
-					ORDER BY dia, hora";
-	}
 	
 	public function set_msg_status(){
 		return "UPDATE senha_uni_msg 
@@ -1628,21 +1565,6 @@ public function get_senha_msg_loc(){
 				WHERE 
 					id_uni = :id_uni";
 	}
-
-	public function set_conf_prio(){
-		return "UPDATE unidades 
-				SET 
-					prioridade_sempre_topo = :tipo_priori
-				WHERE 
-					id_uni = :id_uni";
-	}
-
-	public function get_conf_prio(){
-		return "SELECT prioridade_sempre_topo 
-				FROM unidades 
-				WHERE id_uni = :id_uni";
-	}
-	
 	
 	public function get_nm_pri(){
 		return "SELECT nm_pri

@@ -34,9 +34,33 @@ SET escape_string_warning = off;
 -- TOC entry 400 (class 2612 OID 16386)
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
 --
---DROP PROCEDURAL LANGUAGE IF EXISTS plpgsql CASCADE;
+-- função para setar a linguagem plpgsql caso nao seja a linguagem padrão
+CREATE OR REPLACE FUNCTION create_language_plpgsql()
+RETURNS BOOLEAN AS $$
+    CREATE LANGUAGE plpgsql;
+    SELECT TRUE;
+$$ LANGUAGE SQL;
 
---CREATE PROCEDURAL LANGUAGE plpgsql;
+SELECT CASE WHEN NOT
+    (
+        SELECT  TRUE AS exists
+        FROM    pg_language
+        WHERE   lanname = 'plpgsql'
+        UNION
+        SELECT  FALSE AS exists
+        ORDER BY exists DESC
+        LIMIT 1
+    )
+THEN
+    create_language_plpgsql()
+ELSE
+    FALSE
+END AS plpgsql_created;
+
+DROP FUNCTION create_language_plpgsql();
+
+
+
 
 SET search_path = public, pg_catalog;
 
@@ -1366,23 +1390,6 @@ ALTER SEQUENCE usuarios_id_usu_seq OWNED BY usuarios.id_usu;
 
 SELECT pg_catalog.setval('usuarios_id_usu_seq', 2, true);
 
-
-CREATE SEQUENCE agendas_id_agen_seq
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- TOC entry 2076 (class 0 OID 0)
--- Dependencies: 1605
--- Name: usuarios_id_usu_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE agendas_id_agen_seq OWNED BY agendas.id_agen;
-
-SELECT pg_catalog.setval('agendas_id_agen_seq', 2, true);
 
 --
 -- TOC entry 1888 (class 2604 OID 27365)

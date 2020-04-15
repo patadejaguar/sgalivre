@@ -58,7 +58,8 @@ Install.testDB = function() {
 	document.getElementsByTagName("body")[0].appendChild(result);
 
     var p = new Object();
-    p['db_host'] = document.getElementById("db_host").value;
+        p['db_type'] = document.getElementById("db_type").value;
+        p['db_host'] = document.getElementById("db_host").value;
 	p['db_port'] = document.getElementById("db_port").value;
 	p['db_user'] = document.getElementById("db_user").value;
 	p['db_pass'] = document.getElementById("db_pass").value;

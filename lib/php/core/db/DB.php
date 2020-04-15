@@ -270,21 +270,6 @@ abstract class DB {
 		
 		return $servico;
 	}
-
-	public function new_agenda($linha){
-		$id_agen	= (int) $linha['id_agen'];
-		$dia    = $linha['dia'];
-		$hora 		= $linha['hora'];
-		$id_usu 	= (int) $linha['id_usu'];
-		$id_uni 	= (int) $linha['id_uni'];
-        $dia_semana 	= $linha['dia_semana'];
-        $id_cliente 	= (int) $linha['id_cliente'];
-        
-        $agenda 	= new Agenda($id_agen, $dia, $hora, $id_usu, $id_uni, $dia_semana, $id_cliente);
-        
-		
-		return $agenda;
-	}
 	
 	public function criar_senha($linha){
 		$sigla 	= $linha['sigla_serv'];
@@ -831,8 +816,7 @@ abstract class DB {
 		$statement->bindValue(':id_usu', $id_usu, PDO::PARAM_INT);
 		$statement->execute();
 		
-		$u = DB::to_array($statement);
-		$usuarios = array();
+		$u = $this->to_array($statement);
 		
 		if (count($u) > 0) {
 			$u = $u[0];
@@ -840,8 +824,6 @@ abstract class DB {
 		}
 		return null;
 	}
-
-	
 	
 	/**
 	 * Retorna uma lista de usuarios através do nome
@@ -991,25 +973,6 @@ abstract class DB {
      * @return Usuario
      */
 	public abstract function inserir_usuario($login_usu, $nm_usu, $ult_nm_usu, $senha_usu);
-
-	public abstract function criar_agenda($dia, $dia_semana, $hora, $id_usu, $id_uni);
-
-	public function marcar_agendamento($id_agendamento, $id_usu){
-		$sql = $this->get_queries()->marcar_agendamento();	
-
-		$statement = $this->m_connection->prepare($sql); 
-		$statement->bindValue(':id_agenda', $id_agendamento, PDO::PARAM_INT);
-		$statement->bindValue(':id_cli', $id_usu, PDO::PARAM_INT);
-		$statement->execute();
-	}
-
-	public function desmarcar_agendamento($id_agendamento){
-		$sql = $this->get_queries()->desmarcar_agendamento();	
-
-		$statement = $this->m_connection->prepare($sql); 
-		$statement->bindValue(':id_agenda', $id_agendamento, PDO::PARAM_INT);
-		$statement->execute();
-	}
 	
 	public function atualizar_usuario($id_usu, $login_usu, $nm_usu, $ult_nm_usu) {
 		$sql = $this->get_queries()->atualizar_usuario();
@@ -1807,27 +1770,14 @@ abstract class DB {
 	 * @return void
 	 */
 	public function remover_servico_uni($id_uni,$id_serv) {
-
 		$sql = $this->get_queries()->remover_servico_uni();
 		
 		$statement = $this->m_connection->prepare($sql);
 		$statement->bindValue(':id_uni', $id_uni, PDO::PARAM_INT);
 		$statement->bindValue(':id_serv', $id_serv, PDO::PARAM_INT);
 		$statement->execute();
-
 	}
-
-	public function desmarcar_agen($dia, $dia_semana, $hora, $id_usu, $id_uni) {
-		$sql = $this->get_queries()->desmarcar_agen();		
-		
-		$statement = $this->m_connection->prepare($sql);		
-		$statement->bindValue(':dia', $dia, PDO::PARAM_STR);
-		$statement->bindValue(':hora', $hora, PDO::PARAM_STR);
-		$statement->bindValue(':id_usu', $id_usu, PDO::PARAM_INT);
-		$statement->bindValue(':id_uni', $id_uni, PDO::PARAM_INT);
-		$statement->execute();
-		
-	}	
+	
 	
 	/**
 	 * Retorna a PermissaoModuloGrupo com base na unidade passada como referência,
@@ -2175,54 +2125,6 @@ abstract class DB {
 	 * 
 	 * @return array
 	 */
-
-	public function get_agendas($dia, $horario, $id_uni, $id_usuario) {
-		$sql = $this->get_queries()->get_agendas();
-
-		$statement = $this->m_connection->prepare($sql);
-		$statement->bindValue(':dia', $dia, PDO::PARAM_STR);
-		$statement->bindValue(':horario', $horario, PDO::PARAM_STR);
-    	$statement->bindValue(':id_uni',$id_uni, PDO::PARAM_INT);
-    	$statement->bindValue(':id_usuario',$id_usuario, PDO::PARAM_INT);
-		
-		$statement->execute();
-		
-		$agendas 	= array();
-		$tmp 		= $this->to_array($statement);
-		foreach ($tmp as $a) {
-			$id 			= (int) $a['id_agen'];
-			$agenda 		= DB::getInstance()->new_agenda($a);
-			$agendas[$id] 	= $agenda;
-
-		}
-		return $agendas;
-	}
-
-	public function get_agendas_disponiveis($dia, $horario, $id_uni, $id_usuario, $id_cliente) {
-		$sql = $this->get_queries()->get_agendas_disponiveis();
-
-		$statement = $this->m_connection->prepare($sql);
-		$statement->bindValue(':dia', $dia, PDO::PARAM_STR);
-		$statement->bindValue(':horario', $horario, PDO::PARAM_STR);
-    	$statement->bindValue(':id_uni',$id_uni, PDO::PARAM_INT);
-    	$statement->bindValue(':id_usuario',$id_usuario, PDO::PARAM_INT);
-    	$statement->bindValue(':id_cliente',$id_cliente, PDO::PARAM_INT);
-		
-		$statement->execute();
-		
-		$agendas 	= array();
-		$tmp 		= $this->to_array($statement);
-		foreach ($tmp as $a) {
-			$id 			= (int) $a['id_agen'];
-			$agenda 		= DB::getInstance()->new_agenda($a);
-			$agendas[$id] 	= $agenda;
-
-		}
-		return $agendas;
-	}
-
-	
-
 	public function get_servicos() {
 		$sql = $this->get_queries()->get_servicos();
 		
@@ -3408,20 +3310,6 @@ abstract class DB {
 		$status = $status[0][0];
 		return $status;
 	}
-
-	public function get_agenda($dia, $horario, $id_uni, $id_usuario){
-		$sql = $this->get_queries()->get_agenda();
-		$statement = $this->m_connection->prepare($sql);
-		$statement->bindValue(':dia', $dia, PDO::PARAM_STR);
-		$statement->bindValue(':horario', $horario, PDO::PARAM_STR);
-    	$statement->bindValue(':id_uni',$id_uni, PDO::PARAM_INT);
-    	$statement->bindValue(':id_usuario',$id_usuario, PDO::PARAM_INT);
-    	$statement->execute();
-    	
-    	$status = $this->to_array($statement);
-		$status = $status[0][0];
-		return $status;
-	}
 	
 	public function set_msg_status($id_uni,$status_imp){
 		$sql = $this->get_queries()->set_msg_status();
@@ -3429,25 +3317,6 @@ abstract class DB {
     	$statement->bindValue(':id_uni',$id_uni, PDO::PARAM_INT);
     	$statement->bindValue(':status_imp',$status_imp, PDO::PARAM_INT);
     	$statement->execute();
-	}
-
-	public function set_conf_prio($id_uni,$tipo_priori){
-		$sql = $this->get_queries()->set_conf_prio();
-		$statement = $this->m_connection->prepare($sql);
-    	$statement->bindValue(':id_uni',$id_uni, PDO::PARAM_INT);
-    	$statement->bindValue(':tipo_priori',$tipo_priori, PDO::PARAM_INT);
-    	$statement->execute();
-	}
-
-	public function get_conf_prio($id_uni){
-		$sql = $this->get_queries()->get_conf_prio();
-		$statement = $this->m_connection->prepare($sql);
-    	$statement->bindValue(':id_uni',$id_uni, PDO::PARAM_INT);
-    	$statement->execute();
-    	
-    	$status = $this->to_array($statement);
-		$status = $status[0][0];
-		return $status;
 	}
 	
 	public function get_nm_pri($id_pri){

@@ -16,7 +16,7 @@
  | Graidle v0.5	http://graidle.sourceforge.net
  +----------------------------------------------------------------------+
 */
-class Color extends Graidle
+class TableOfColors extends Graidle
 {
 		function Color(){
 			$this->color = array(

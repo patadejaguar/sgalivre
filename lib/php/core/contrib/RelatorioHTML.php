@@ -170,7 +170,7 @@ class RelatorioHTML extends Relatorio
 	}else{
 		?>
 		
-		<div style="font-size:20px; Font Family:Verdana,bold,Arial,Sans-serif; text-align:center;">
+		<div style="font-size:20px; font-family: verdana,bold,arial,sans-serif; text-align:center;">
             Não há atendimentos no período.
 		</div>
 		<?php
@@ -178,7 +178,7 @@ class RelatorioHTML extends Relatorio
 	}
 	?>
 			<br/>
-			<div style="font-size:10px; Font Family:Verdana,Arial,Sans-serif">
+			<div style="font-size:10px; font-family: verdana,bold,arial,sans-serif;">
                 Tempo de Processamento: <?php echo Relatorio::get_seconds_as_time($this->getTimeSinceStart());?><br/>
                 SGA Livre - Desenvolvido pela Dataprev
 			</div>

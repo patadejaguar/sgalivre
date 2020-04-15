@@ -53,7 +53,7 @@ try {
             $ident_cliente = $atendimento->get_cliente()->get_ident();
 
             // O dt_cheg da nova senha deve ser o momento atual
-            DB::getInstance()->erro_triagem($id_uni, $id_servico_redir, $num_senha, $id_prio, 0, Atendimento::SENHA_EMITIDA, $nm_cliente, $ident_cliente, SGA::get_date("Y-m-d H:m:i"));
+            DB::getInstance()->erro_triagem($id_uni, $id_servico_redir, $num_senha, $id_prio, 0, Atendimento::SENHA_EMITIDA, $nm_cliente, $ident_cliente, SGA::get_date("Y/m/d H:i:s"));
             $redirecionado = true;
         }
     }

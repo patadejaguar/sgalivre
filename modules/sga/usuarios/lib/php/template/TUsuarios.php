@@ -95,7 +95,7 @@ class TUsuarios extends Template {
         
 		        $raiz = DB::getInstance()->get_arvore_grupos();
 		        $tmp_grupos = array();
-		        TUsuarios::get_arvore_grupos_array($raiz, &$tmp_grupos);
+		        TUsuarios::get_arvore_grupos_array($raiz, $tmp_grupos);
 		
 		        // Obtem as lotacoes do admin nas quais ele pode editar usuarios
 		        $lotacoes = DB::getInstance()->get_lotacoes_editaveis($admin->get_id(), Session::getInstance()->get(SGA::K_CURRENT_MODULE)->get_id(), $raiz->get_id(), true);
@@ -137,7 +137,7 @@ class TUsuarios extends Template {
     public static function get_arvore_grupos_array(Grupo $grupo, $array) {
         $array[$grupo->get_id()] = $grupo;
         foreach ($grupo->get_filhos() as $g) {
-            TUsuarios::get_arvore_grupos_array($g, &$array);
+            TUsuarios::get_arvore_grupos_array($g, $array);
         }
     }
 

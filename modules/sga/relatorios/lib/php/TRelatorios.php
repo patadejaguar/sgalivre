@@ -254,7 +254,7 @@ class TRelatorios extends Template {
         $temp = DB::getInstance()->get_arvore_grupos();
 		$raiz = DB::getInstance()->get_arvore_grupos();
         $tmp_grupos = array();
-        TRelatorios::get_arvore_grupos_array($raiz, &$tmp_grupos);
+        TRelatorios::get_arvore_grupos_array($raiz, $tmp_grupos);
 		
         // Obtem as lotacoes do admin nas quais ele pode editar usuarios
         $lotacoes = DB::getInstance()->get_lotacoes_editaveis($admin->get_id(), Session::getInstance()->get(SGA::K_CURRENT_MODULE)->get_id(), $raiz->get_id(), true);
@@ -297,7 +297,7 @@ class TRelatorios extends Template {
  	public static function get_arvore_grupos_array(Grupo $grupo, $array) {
         $array[$grupo->get_id()] = $grupo;
         foreach ($grupo->get_filhos() as $g) {
-            TRelatorios::get_arvore_grupos_array($g, &$array);
+            TRelatorios::get_arvore_grupos_array($g,$array);
         }
     }
 
